@@ -2,69 +2,78 @@ package modelo;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Pessoa {
-    private String nome;
-    private String cpf;
-    private LocalDate dataNascimento;
-    private List<AvaliacaoFisica> avaliacoes;
 
-    public Pessoa(String nome, String cpf) {
+    private LocalDate dataNascimento;
+    private String nome;
+    private String CPF;
+
+
+    Pessoa(String n) {
+        nome = n;
+    }
+
+    Pessoa() {
+
+    }
+
+    Pessoa(String nome, String CPF) {
         this.nome = nome;
-        this.cpf = cpf;
-        this.avaliacoes = new ArrayList<>();
+        setCpf(CPF);
+    }
+
+    // métodos
+    public String exibirDados() {
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        String aux = "Dados da Pessoa cadastrada: \n";
+        aux += "Nome: " + nome + "\n";
+        if (CPF != null) {
+            aux += "CPF: " + CPF + "\n";
+        }
+        if (dataNascimento != null) {
+            aux += "Data de Nascimento: " + formato.format(dataNascimento);
+        }
+
+        return aux;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public String getCPF() {
+        return CPF;
     }
 
     public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
-    public String getCpf() {
-        return cpf;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public void setCpf(String cpf) {
-        this.cpf = cpf;
+        cpf = cpf.replace(".", "").replace("-", "").trim();
+        if (cpf != null && cpf.length() == 11) {
+            this.CPF = cpf;
+        } else {
+            System.out.println("CPF inválido.");
+        }
     }
 
-    public List<AvaliacaoFisica> getAvaliacoes() {
-        return avaliacoes;
+    public void setDataNascimento(LocalDate dtN) {
+        dataNascimento = dtN;
     }
 
-    public void setAvaliacoes(List<AvaliacaoFisica> avaliacoes) {
-        this.avaliacoes = avaliacoes;
+    @Override
+    public String toString() {
+        return nome;
     }
 
-    public void adicionaAvaliacao(AvaliacaoFisica avaliacao) {
-        this.avaliacoes.add(avaliacao);
-    }
 
-    public String exibirDados(){
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-        String aux = "Dados da Pessoa cadastrada: \n";
-        aux += "Nome: "+nome+"\n";
-        if(cpf!=null)
-            aux += "CPF: "+cpf+"\n";
-        if(dataNascimento != null)
-            aux += "Data de Nascimento: "+formato.format(dataNascimento) + "\n";
-
-        if (avaliacoes != null)
-            aux += "Quantidade de Avaliacoes: " + avaliacoes.size();
-        return aux;
-
-    }
 }
