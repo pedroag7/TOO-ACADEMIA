@@ -48,7 +48,7 @@ public class Aluno extends Pessoa {
         return aux;
     }
 
-    private void verificaDesconto(double vl){
+    public void verificaDesconto(double vl){
         LocalDate dataAtual = LocalDate.now();
         long meses = ChronoUnit.MONTHS.between(dataAtual, dataMatricula);
         if (meses >= 3){
@@ -64,5 +64,13 @@ public class Aluno extends Pessoa {
 
     public void setDataMatricula(LocalDate dataMatricula) {
         this.dataMatricula = dataMatricula;
+    }
+
+    public Plano getPlano() {
+        return plano;
+    }
+
+    public void setPlano(Plano plano) {
+        this.plano = plano;
     }
 }

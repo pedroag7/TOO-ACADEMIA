@@ -10,6 +10,7 @@ public class AvaliacaoFisica {
     private double altura;
     private int idade;
     private double imc;
+    private Professor professor;
 
 
     public AvaliacaoFisica(Pessoa aluno) {
@@ -76,6 +77,16 @@ public class AvaliacaoFisica {
         System.out.println("Data da avaliacao: " + dataFormatada);
         System.out.println("Imc: " + imcformat);
     }
+
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
+    }
+
+
 
 }
 

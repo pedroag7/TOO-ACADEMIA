@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import modelo.Aluno;
 import modelo.AvaliacaoFisica;
+import modelo.Plano;
 import modelo.Professor;
 
 
@@ -38,6 +39,23 @@ public class TesteHeranca {
         
         System.out.println("---- ");
         av1.exibirDados();
-        
+
+        Plano p1 = new Plano();
+        p1.setNome("aa");
+        p1.setValor(120.00);
+        p1.setDescricao("aaa");
+
+        Aluno joao = new Aluno();
+        joao.setNome("Joao");
+        joao.setMatricula("1243");
+        joao.setCpf("123.123.123-67");
+        joao.setDataMatricula(LocalDate.of(2024,9,10));
+        joao.setPlano(p1);
+        joao.verificaDesconto(joao.getPlano().getValor());
+
+        a.setPlano(p1);
+        a.setDataMatricula(LocalDate.of(2025,5,10));
+        a.verificaDesconto(a.getPlano().getValor());
+
     }
 }
