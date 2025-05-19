@@ -1,9 +1,9 @@
 package modelo;
-import java.util.*;
-public class Plano {
+
+public class Convenio {
     private String nome;
     private String descricao;
-    private double valor;
+    private double desconto;
 
     public String getNome() {
         return nome;
@@ -21,13 +21,11 @@ public class Plano {
         this.descricao = descricao;
     }
 
-    public double getValor() {
-        return valor;
+    public double getDesconto() {
+        return desconto;
     }
 
-    public void setValor(double valor) {
-        this.valor = valor;
+    public void setDesconto(double desconto) {
+        this.desconto = desconto;
     }
-
-
 }

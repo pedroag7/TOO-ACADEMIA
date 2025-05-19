@@ -1,16 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package teste;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 import modelo.Aluno;
+import modelo.AlunoConvenio;
 import modelo.AvaliacaoFisica;
+import modelo.Convenio;
+import modelo.Pessoa;
 import modelo.Plano;
 import modelo.Professor;
-
 
 public class TesteHeranca {
     public static void main(String[] args) {
@@ -18,44 +17,46 @@ public class TesteHeranca {
         p.setNome("Juka");
         p.setCpf("123.123.123-67");
         p.setEspecializacao("Musculação");
-        
+
         System.out.println(p.exibirDados());
-        
-        Aluno a = new Aluno();
+
+        Plano plano1 = new Plano();
+        plano1.setNome("Básico");
+        plano1.setDescricao("Acesso a musculação liberada");
+        plano1.setValor(100);
+
+        Convenio c = new Convenio();
+        c.setNome("IFSUL");
+        c.setDesconto(5);
+
+        AlunoConvenio a = new AlunoConvenio(c);
         a.setNome("Vivente");
         a.setMatricula("123");
-        DateTimeFormatter formato = 
-                DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        
-        a.setDataNascimento(LocalDate.parse("10/01/2008", 
-                formato));
-        
-        
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        a.setDataNascimento(LocalDate.parse("10/01/2008", formato));
+
+        a.setDataMatricula(LocalDate.parse("10/04/2024", formato));
+
+        a.setPlano(plano1);
+
+        Aluno a2 = new Aluno();
+        a2.setNome("Joaozinho");
+        a2.setMatricula("123456");
+        a2.setDataNascimento(LocalDate.parse("10/02/2004", formato));
+        a2.setDataMatricula(LocalDate.parse("09/05/2025", formato));
+        a2.setPlano(plano1);
+
+
         AvaliacaoFisica av1 = new AvaliacaoFisica(a);
         a.adicionarAvaliacao(av1);
         av1.setProfessor(p);
-        
+        a2.adicionarAvaliacao(av1);
         System.out.println(a.exibirDados());
-        
         System.out.println("---- ");
-        av1.exibirDados();
-
-        Plano p1 = new Plano();
-        p1.setNome("aa");
-        p1.setValor(120.00);
-        p1.setDescricao("aaa");
-
-        Aluno joao = new Aluno();
-        joao.setNome("Joao");
-        joao.setMatricula("1243");
-        joao.setCpf("123.123.123-67");
-        joao.setDataMatricula(LocalDate.of(2024,9,10));
-        joao.setPlano(p1);
-        joao.verificaDesconto(joao.getPlano().getValor());
-
-        a.setPlano(p1);
-        a.setDataMatricula(LocalDate.of(2025,5,10));
-        a.verificaDesconto(a.getPlano().getValor());
+        System.out.println(av1.exibirDados());
+        System.out.println("----");
+        System.out.println(a2.exibirDados());
 
     }
 }

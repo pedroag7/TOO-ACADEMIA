@@ -1,8 +1,8 @@
 package modelo;
-import java.time.LocalDate;
-import java.time.Year;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
 public class AvaliacaoFisica {
     private Pessoa aluno;
     private LocalDate data;
@@ -11,14 +11,12 @@ public class AvaliacaoFisica {
     private int idade;
     private double imc;
     private Professor professor;
+    DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 
     public AvaliacaoFisica(Pessoa aluno) {
         this.aluno = aluno;
         this.data = LocalDate.now();
-        if (aluno.getDataNascimento() != null)
-            this.idade = CalcularIdade(aluno.getDataNascimento());
-
     }
 
     public Pessoa getAluno() {
@@ -54,29 +52,38 @@ public class AvaliacaoFisica {
         this.imc = imc;
     }
 
-    public double CalcularImc(double peso, double altura){
-            double imcc = peso/(altura*altura);
-            return imcc;
-    }
-
-    public int CalcularIdade(LocalDate data){
-        int idade = 0;
-        Year ano = Year.now();
-        idade = ano.getValue()- data.getYear();
-        return idade;
+    public double calcularIMC(){
+        return peso / (altura*altura);
     }
 
 
-    public void exibirDados() {
-        System.out.println();
-        String imcformat = String.format("%.2f", imc);
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String dataFormatada = data.format(dtf);
-        System.out.println("Nome: " + aluno.getNome());
-        System.out.println("Idade: " + idade);
-        System.out.println("Data da avaliacao: " + dataFormatada);
-        System.out.println("Imc: " + imcformat);
+    public void calcularIdade(){
+        idade  = Period.between(aluno.getDataNascimento(), data).getYears();
     }
+
+
+    public String exibirDados(){
+
+
+        String aux = "Dados da Avaliação Física: \n";
+        aux += "Aluno: " + aluno + "\n";
+        calcularIdade();
+        if (idade != 0) {
+            aux += "Idade: " + idade + "\n";
+        }
+        if (data != null) {
+            aux += "Data da Avaliação: " + formato.format(data);
+        }
+        imc = calcularIMC();
+        if(imc > 0){
+            aux += "\nIMC: " + imc;
+        }
+        if(professor!=null)
+            aux += "\nProfessor: "+professor;
+        return aux;
+    }
+
+
 
     public Professor getProfessor() {
         return professor;
@@ -86,7 +93,9 @@ public class AvaliacaoFisica {
         this.professor = professor;
     }
 
-
-
+    @Override
+    public String toString() {
+        return formato.format(data) +" - IMC: "+ imc;
+    }
 }
 

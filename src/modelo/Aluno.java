@@ -1,22 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelo;
 
 import java.time.LocalDate;
-import java.time.Month;
-import java.time.temporal.ChronoUnit;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Aluno extends Pessoa {
-    private String matricula;
-    private List<AvaliacaoFisica> avaliacoes = new ArrayList<>();
-    private LocalDate dataMatricula;
-    private Plano plano;
 
+    protected String matricula;
+    protected List<AvaliacaoFisica> avaliacoes = new ArrayList<>();
+    protected Plano plano;
+    protected double valorMensalidade;
+    protected LocalDate dataMatricula;
 
     public void adicionarAvaliacao(AvaliacaoFisica avaliacao) {
         avaliacoes.add(avaliacao);
@@ -40,22 +37,38 @@ public class Aluno extends Pessoa {
 
     @Override
     public String exibirDados() {
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
         String aux = super.exibirDados();
         aux += "\nMatricula: " + matricula;
+        if (dataMatricula != null) {
+            aux += "\nData de Matrícula: " + formato.format(dataMatricula);
+        }
         aux += "\nAvaliações Físicas Realizadas: "
-                + avaliacoes.size() + "\n";
-        aux += "\nValor Mensalidade: " + plano.getValor();
+                + avaliacoes.size();
+
+        if (plano != null) {
+            aux += "\n Plano: " + plano.getNome();
+            aux += "\nValor Mensalidade: R$ " + valorMensalidade;
+        }
+        aux += "\n";
         return aux;
     }
 
-    public void verificaDesconto(double vl){
-        LocalDate dataAtual = LocalDate.now();
-        long meses = ChronoUnit.MONTHS.between(dataAtual, dataMatricula);
-        if (meses >= 3){
-            double desconto = vl * 0.10;
-            vl -= desconto;
-        }
+    public List<AvaliacaoFisica> getAvaliacoes() {
+        return avaliacoes;
+    }
 
+    public void setAvaliacoes(List<AvaliacaoFisica> avaliacoes) {
+        this.avaliacoes = avaliacoes;
+    }
+
+    public double getValorMensalidade() {
+        return valorMensalidade;
+    }
+
+    public void setValorMensalidade(double valorMensalidade) {
+        this.valorMensalidade = valorMensalidade;
     }
 
     public LocalDate getDataMatricula() {
@@ -72,5 +85,31 @@ public class Aluno extends Pessoa {
 
     public void setPlano(Plano plano) {
         this.plano = plano;
+        verificaDesconto();
+
     }
+
+    public void verificaDesconto() {
+        int anos = Period.between(dataMatricula, LocalDate.now())
+                .getYears();
+        int meses = Period.between(dataMatricula, LocalDate.now())
+                .getMonths();
+
+        meses += (anos * 12);
+
+        if (plano != null) {
+            valorMensalidade = plano.getValor();
+
+            if (meses >= 3) {
+                valorMensalidade -= (valorMensalidade * 0.1);
+            } else {
+
+                System.out.println("Aluno não possui tempo para desconto");
+            }
+        } else {
+            System.out.println("Aluno não possui plano selecionado. Informe o plano do aluno");
+        }
+
+    }
+
 }
