@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pessoa {
+public class Pessoa implements Exibivel {
 
     private LocalDate dataNascimento;
     private String nome;

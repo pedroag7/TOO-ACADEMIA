@@ -10,6 +10,7 @@ import modelo.Convenio;
 import modelo.Pessoa;
 import modelo.Plano;
 import modelo.Professor;
+import modelo.Impressora;
 
 public class TesteHeranca {
     public static void main(String[] args) {
@@ -52,11 +53,16 @@ public class TesteHeranca {
         a.adicionarAvaliacao(av1);
         av1.setProfessor(p);
         a2.adicionarAvaliacao(av1);
-        System.out.println(a.exibirDados());
+        //System.out.println(a.exibirDados());
         System.out.println("---- ");
-        System.out.println(av1.exibirDados());
+        //System.out.println(av1.exibirDados());
         System.out.println("----");
-        System.out.println(a2.exibirDados());
+        //System.out.println(a2.exibirDados());
+
+        Impressora.imprimirDados(a);
+        Impressora.imprimirDados(p);
+        Impressora.imprimirDados(a2);
+        Impressora.imprimirDados(plano1);
 
     }
 }

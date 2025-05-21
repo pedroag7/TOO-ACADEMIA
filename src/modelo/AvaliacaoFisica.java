@@ -3,7 +3,7 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class AvaliacaoFisica {
+public class AvaliacaoFisica implements Exibivel {
     private Pessoa aluno;
     private LocalDate data;
     private double peso;

@@ -1,9 +1,11 @@
 package modelo;
+import java.text.DecimalFormat;
 import java.util.*;
-public class Plano {
+public class Plano implements Exibivel {
     private String nome;
     private String descricao;
     private double valor;
+    DecimalFormat df = new DecimalFormat("#,##0.00");
 
     public String getNome() {
         return nome;
@@ -29,5 +31,13 @@ public class Plano {
         this.valor = valor;
     }
 
+    @Override
+    public String exibirDados() {
+        String aux = "Dados do Plano:\n";
+        aux += "Nome: " + nome + "\n";
+        aux += "Descricao: " + descricao + "\n";
+        aux += "Valor: " + df.format(valor) + "\n";
+        return aux;
 
+    }
 }
